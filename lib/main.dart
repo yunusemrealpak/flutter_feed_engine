@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feed_engine/app.dart';
+import 'package:flutter_feed_engine/core/cache/memory_cache_config.dart';
+import 'package:flutter_feed_engine/core/di/injection.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  // Memory image cache limitlerini ayarla
+  MemoryCacheConfig.init();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  // Dependency injection kurulumu
+  await configureDependencies();
+
+  runApp(const FeedApp());
 }
